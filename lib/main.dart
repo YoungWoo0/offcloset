@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'user_signup.dart';
 import 'user_home.dart';
+import 'mainPage.dart';
+import 'user_search.dart';
+import 'user_home.dart';
+import 'user_favorite.dart';
+import 'user_mypage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +22,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
+        '/main': (context) => MainPage(),
+        '/search': (context) => UserSearchPage(),
       },
     );
   }

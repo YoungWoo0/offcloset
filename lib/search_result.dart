@@ -3,18 +3,16 @@ import 'user_search.dart';
 import 'user_home.dart';
 import 'user_favorite.dart';
 import 'user_mypage.dart';
-import 'mainPage.dart';
 
-class UserHomePage extends StatefulWidget {
-  const UserHomePage({Key? key}) : super(key: key);
+class SearchResultPage extends StatefulWidget {
+  const SearchResultPage({Key? key}) : super(key: key);
 
   @override
-  _UserHomePageState createState() => _UserHomePageState();
+  _SearchResultState createState() => _SearchResultState();
 }
 
-class _UserHomePageState extends State<UserHomePage> {
-  int _selectedIndex = 1;
-
+class _SearchResultState extends State<SearchResultPage> {
+  int _selectedIndex = 0;
 
   final List<Widget> _pages = <Widget>[
     UserSearchPage(),
@@ -27,14 +25,10 @@ class _UserHomePageState extends State<UserHomePage> {
     setState(() {
       _selectedIndex = index;
     });
-
-    //Navigator.pushNamed(context, '/main');
-
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => _pages[_selectedIndex]),
     );
-
   }
 
   @override
@@ -42,7 +36,7 @@ class _UserHomePageState extends State<UserHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFDC984F3),
-        title: Text('OFF-Closet'),
+        title: Text('검색 결과'),
         automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
       ),
       body: SingleChildScrollView(
@@ -52,21 +46,21 @@ class _UserHomePageState extends State<UserHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.search),
+                  hintText: '검색어를 입력하세요',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  contentPadding: EdgeInsets.only(left: 30),
+                ),
+              ),
+              SizedBox(height: 20.0),
               Text(
-                '선호 스타일 매장',
+                '지역 내 검색 결과',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 200.0),
-              Text(
-                '내가 좋아요한 매장',
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 200.0),
-              Text(
-                '지정 지역 매장 이벤트',
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 200.0),
             ],
           ),
         ),

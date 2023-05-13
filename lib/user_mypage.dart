@@ -36,7 +36,7 @@ class _UserMypagePageState extends State<UserMypagePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFDC984F3),
-        title: Text('OFF-Closet'),
+        title: Text('마이페이지'),
         automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
       ),
       body: SingleChildScrollView(
@@ -46,11 +46,43 @@ class _UserMypagePageState extends State<UserMypagePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 16.0),
+              Row(
+                children: [
+                  Image.asset("assets/images/user_icon.png", height: 100, width: 100),
+                  SizedBox(width: 16.0),
+                  Expanded(
+                    child: Text(
+                      '닉네임',
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 16.0),
               Text(
-                '마이페이지',
+                '선호 스타일',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 200.0),
+              Text(
+                'ex) #미니멀 #스트릿 #캐주얼',
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '내 정보 수정',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '방문한 매장',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '고객 센터',
+                style: TextStyle(fontSize: 20),
+              ),
+
             ],
           ),
         ),

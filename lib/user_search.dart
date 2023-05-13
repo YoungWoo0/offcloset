@@ -3,6 +3,7 @@ import 'user_search.dart';
 import 'user_home.dart';
 import 'user_favorite.dart';
 import 'user_mypage.dart';
+import 'search_result.dart';
 
 class UserSearchPage extends StatefulWidget {
   const UserSearchPage({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFDC984F3),
-        title: Text('OFF-Closet'),
+        title: Text('검색'),
         automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
       ),
       body: SingleChildScrollView(
@@ -46,11 +47,24 @@ class _UserSearchPageState extends State<UserSearchPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 16.0),
-              Text(
-                '검색',
-                style: TextStyle(fontSize: 20),
+              TextField(
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SearchResultPage()),
+                      );
+                    },
+                  ),
+                  hintText: '검색어를 입력하세요',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  contentPadding: EdgeInsets.only(left: 30),
+                ),
               ),
-              SizedBox(height: 200.0),
             ],
           ),
         ),

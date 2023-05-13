@@ -36,7 +36,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFDC984F3),
-        title: Text('OFF-Closet'),
+        title: Text('좋아요'),
         automaticallyImplyLeading: false, // 뒤로가기 버튼 없애기
       ),
       body: SingleChildScrollView(
