@@ -47,7 +47,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
             children: [
               SizedBox(height: 16.0),
               Text(
-                '좋아요',
+                '좋아요한 매장 리스트',
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(height: 200.0),
