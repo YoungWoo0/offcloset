@@ -5,7 +5,7 @@ import 'user_favorite.dart';
 import 'user_mypage.dart';
 import 'mainPage.dart';
 import 'StoreScreen.dart';
-
+import 'User_location_dummy.dart';
 class UserHomePage extends StatefulWidget {
   const UserHomePage({Key? key}) : super(key: key);
 
@@ -60,10 +60,10 @@ class _UserHomePageState extends State<UserHomePage> {
             children: [
               SizedBox(height: 16.0),
               Text(
-                '선호 스타일 매장 리스트',
+                '선호 스타일 매장',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 50.0),
+              SizedBox(height: 30.0),
               GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -86,26 +86,150 @@ class _UserHomePageState extends State<UserHomePage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.black.withOpacity(0.6),
+                          border: Border.all(),
                         image: DecorationImage(
                           image: NetworkImage(favoriteStores[index]),
                           fit: BoxFit.cover,
                         ),
                       ),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                      Container(
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        border: Border.all()
+                      ),
+                      child: Text(
+                        '게시글 내용',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                        ),
+                      ),
                     ),
+                   ]
+                  ))
                   );
                 },
               ),
               Text(
-                '지정 지역 매장 리스트',
+                '내가 좋아요한 매장',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 200.0),
+              SizedBox(height: 16.0),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1.0,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0,
+                ),
+                itemCount: favoriteStores.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StoreInfoScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            border: Border.all(),
+                            image: DecorationImage(
+                              image: NetworkImage(favoriteStores[index]),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.6),
+                                      border: Border.all()
+                                  ),
+                                  child: Text(
+                                    '게시글 내용',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ),
+                              ]
+                          ))
+                  );
+                },
+              ),
               Text(
                 '지정 지역 매장 이벤트',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 200.0),
+              SizedBox(height: 16.0),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1.0,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0,
+                ),
+                itemCount: favoriteStores.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StoreInfoScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            border: Border.all(),
+                            image: DecorationImage(
+                              image: NetworkImage(favoriteStores[index]),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.6),
+                                      border: Border.all()
+                                  ),
+                                  child: Text(
+                                    '게시글 내용',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                ),
+                              ]
+                          ))
+                  );
+                },
+              ),
             ],
           ),
         ),
