@@ -3,6 +3,8 @@ import 'user_search.dart';
 import 'user_home.dart';
 import 'user_favorite.dart';
 import 'user_mypage.dart';
+import 'StoreScreen.dart';
+import 'mainPage.dart';
 
 class UserFavoritePage extends StatefulWidget {
   const UserFavoritePage({Key? key}) : super(key: key);
@@ -13,6 +15,13 @@ class UserFavoritePage extends StatefulWidget {
 
 class _UserFavoritePageState extends State<UserFavoritePage> {
   int _selectedIndex = 2;
+  //선호하는 매장들의 이미지 URL 리스트
+  final List<String> favoriteStores = [
+    'https://example.com/store1.jpg',
+    'https://example.com/store2.jpg',
+    'https://example.com/store3.jpg',
+  ];
+
 
   final List<Widget> _pages = <Widget>[
     UserSearchPage(),
@@ -33,6 +42,12 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> favoriteStores = [
+      '매장 1',
+      '매장 2',
+      '매장 3',
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFDC984F3),
@@ -47,10 +62,28 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
             children: [
               SizedBox(height: 16.0),
               Text(
-                '좋아요한 매장 리스트',
+                '좋아요',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 200.0),
+              SizedBox(height: 16.0),
+              ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: favoriteStores.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(favoriteStores[index]),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoreInfoScreen(),
+                      ),
+                    );
+                  },
+                );
+              }
+              )
             ],
           ),
         ),
