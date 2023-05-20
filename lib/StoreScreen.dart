@@ -86,6 +86,31 @@ class StoreInfoScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color(0xFDC984F3),
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        //backgroundColor: Color(0xFDC984F3),
+
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: '검색',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: '좋아요',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: '마이페이지',
+          ),
+        ],
+      ),
     );
   }
 }
