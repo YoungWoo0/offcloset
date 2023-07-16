@@ -6,6 +6,12 @@ import 'user_mypage.dart';
 import 'StoreScreen.dart';
 import 'mainPage.dart';
 
+enum StoreType {
+  Favorite,
+  Local,
+  Event,
+}
+
 class UserFavoritePage extends StatefulWidget {
   const UserFavoritePage({Key? key}) : super(key: key);
 
@@ -15,11 +21,23 @@ class UserFavoritePage extends StatefulWidget {
 
 class _UserFavoritePageState extends State<UserFavoritePage> {
   int _selectedIndex = 2;
-  //선호하는 매장들의 이미지 URL 리스트
+  StoreType _currentStoreType = StoreType.Favorite;
+  bool isFavorite1 = false;
+  bool isFavorite2 = false;
+
+  // 선호하는 매장들의 이미지 파일명 리스트
   final List<String> favoriteStores = [
-    'https://example.com/store1.jpg',
-    'https://example.com/store2.jpg',
-    'https://example.com/store3.jpg',
+    '스트릿1.jpg',
+    '스트릿2.jpg',
+    '스트릿3.jpg',
+    '스트릿4.jpg',
+    '스트릿5.jpg',
+    '캐주얼1.jpg',
+    '캐주얼2.jpg',
+    '캐주얼3.jpg',
+    // 'https://example.com/store1.jpg',
+    // 'https://example.com/store2.jpg',
+    // 'https://example.com/store3.jpg',
   ];
 
 
@@ -40,13 +58,20 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
     );
   }
 
+  // 이미지 경로를 반환하는 함수
+  String getImagePath(StoreType storeType, int index) {
+    List<String> storeList;
+    switch (storeType) {
+      case StoreType.Favorite:
+        storeList = favoriteStores;
+        break;
+    }
+    return 'assets/images/${favoriteStores[index]}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> favoriteStores = [
-      '매장 1',
-      '매장 2',
-      '매장 3',
-    ];
+    bool isFavorite1 = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -60,12 +85,183 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 16.0),
+              SizedBox(height: 20.0),
               Text(
-                '좋아요',
-                style: TextStyle(fontSize: 20),
+                '좋아요한 매장 목록',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.purple),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 20.0),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 3.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.9,
+                        mainAxisSpacing: 7.0,
+                        crossAxisSpacing: 7.0,
+                      ),
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        final imagePath = getImagePath(_currentStoreType, index);
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StoreInfoScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.6),
+                              border: Border.all(),
+                              image: DecorationImage(
+                                image: AssetImage(imagePath),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '원더플레이스',
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '#스트릿 #힙합 #오버핏',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isFavorite1 = !isFavorite1;
+                              });
+                            },
+                            icon: Icon(
+                              isFavorite1 ? Icons.favorite_border : Icons.favorite,
+                              color: isFavorite1 ? Colors.black : Colors.purple,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 10.0),
+
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 3.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.9,
+                        mainAxisSpacing: 7.0,
+                        crossAxisSpacing: 7.0,
+                      ),
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        final imagePath = getImagePath(_currentStoreType, index+4);
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StoreInfoScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.6),
+                              border: Border.all(),
+                              image: DecorationImage(
+                                image: AssetImage(imagePath),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '원더플레이스22222',
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '#스트릿 #힙합 #오버핏',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isFavorite2 = !isFavorite2;
+                              });
+                            },
+                            icon: Icon(
+                              isFavorite2 ? Icons.favorite : Icons.favorite_border,
+                              color: isFavorite2 ? Colors.purple : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+
+              /*
               ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -83,7 +279,7 @@ class _UserFavoritePageState extends State<UserFavoritePage> {
                   },
                 );
               }
-              )
+              )*/
             ],
           ),
         ),

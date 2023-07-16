@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'style_tag.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -17,6 +19,37 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
 
   String? _gender; // 성별 변수
+
+  // 회원가입 함수
+  Future<void> _signUp() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      // Firestore에 회원 데이터 저장
+      await FirebaseFirestore.instance.collection('users').doc(userCredential.user?.uid).set({
+        'name': _nameController.text,
+        'id': _idController.text,
+        'nickname': _nicknameController.text,
+        'email': _emailController.text,
+      });
+
+      // 회원가입이 성공하면 여기에 추가적인 로직을 구현할 수 있습니다.
+      // 예: 회원 데이터를 Firestore에 저장하거나 초기 설정을 진행하는 등의 작업
+      print('회원가입 성공: ${userCredential.user?.uid}');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,9 +169,10 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // TODO: 회원가입 처리 로직 작성
+                    await _signUp();
 
                     // 다음 페이지로 이동
                     Navigator.push(
