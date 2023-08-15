@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'user_search.dart';
 import 'user_home.dart';
@@ -5,7 +6,10 @@ import 'user_favorite.dart';
 import 'user_mypage.dart';
 
 class SearchResultPage extends StatefulWidget {
-  const SearchResultPage({Key? key}) : super(key: key);
+  final String query;
+  final List<DocumentSnapshot> results;
+
+  const SearchResultPage({required this.query, required this.results, Key? key}) : super(key: key);
 
   @override
   _SearchResultState createState() => _SearchResultState();
@@ -30,6 +34,26 @@ class _SearchResultState extends State<SearchResultPage> {
       MaterialPageRoute(builder: (context) => _pages[_selectedIndex]),
     );
   }
+  void _searchFirestore(String query) async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('yourCollectionName') // 데이터베이스 컬렉션 이름을 적절히 변경하세요.
+          .where('fieldToSearch', isEqualTo: query) // 검색 조건 설정
+          .get();
+
+      List<DocumentSnapshot> documents = snapshot.docs;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SearchResultPage(query: query, results: documents),
+        ),
+      );
+    } catch (e) {
+      print("Error searching Firestore: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
