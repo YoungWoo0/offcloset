@@ -3,6 +3,7 @@ import 'user_home.dart';
 import 'user_favorite.dart';
 import 'user_mypage.dart';
 import 'search_result.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserSearchPage extends StatefulWidget {
   const UserSearchPage({Key? key}) : super(key: key);
@@ -32,7 +33,28 @@ class _UserSearchPageState extends State<UserSearchPage> {
       MaterialPageRoute(builder: (context) => _pages[_selectedIndex]),
     );
   }
+  Future<void> _searchFirestore(String query) async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('yourCollectionName') // 데이터베이스 컬렉션 이름을 적절히 변경하세요.
+          .where('fieldToSearch', isEqualTo: query) // 검색 조건 설정
+          .get();
 
+      List<DocumentSnapshot> documents = snapshot.docs;
+      // documents에서 필요한 데이터를 추출하여 사용하세요.
+      // 예: List<String> searchResults = documents.map((doc) => doc['title']).toList();
+      //     또는 SearchResultPage에 결과를 전달할 수도 있습니다.
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SearchResultPage(query: query, results: documents),
+        ),
+      );
+    } catch (e) {
+      print("Error searching Firestore: $e");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,8 +78,8 @@ class _UserSearchPageState extends State<UserSearchPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SearchResultPage()),
-                      );
+                        MaterialPageRoute(builder: (context) => SearchResultPage(query: 'yourQuery', results: []),
+                      ));
                     },
                   ),
                   hintText: '검색어를 입력하세요',
@@ -71,6 +93,9 @@ class _UserSearchPageState extends State<UserSearchPage> {
                   ),
                   contentPadding: EdgeInsets.only(left: 30),
                 ),
+                onSubmitted: (query) {
+                  _searchFirestore(query); // 검색어를 입력하면 Firestore 검색 함수 호출
+                },
               ),
 
               SizedBox(height: 5.0),
